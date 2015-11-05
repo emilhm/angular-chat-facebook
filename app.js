@@ -5,7 +5,9 @@
 
   angular.module('app').controller('ChatController', ChatController);
 
-  function ChatController() {
+  ChatController.$inject = ['$filter'];
+
+  function ChatController($filter) {
 
     var vm = this;
     vm.sendMessage = sendMessage;
@@ -15,61 +17,37 @@
     vm.classMessege = classMessege;
     vm.minChats = minChats;
 
-    vm.messages = [
-      {
-        'username': 'Matt',
-        'content': 'Hi!'
-      },
-      {
-        'username': 'Elisa',
-        'content': 'Whats up?'
-      },
-      {
-        'username': 'Matt',
-        'content': 'I found this nice AngularJS Directive'
-      },
-      {
-        'username': 'Elisa',
-        'content': 'Looks Great!'
-      }
-    ];
-
     vm.usersOnline=[
     	{
-    		'users': 'Bruja 1'
+    		'username': 'Bruja 1', 
+        "visible": false,
+        "message":[{"usernameSend":"Bruja 1", "usernameReceive":vm.username, "content":"Habla claro"}]
     	},
     	{
-    		'users': 'Bruja 2'
+    		'username': 'Bruja 2',
+        "visible": false,
+        "message":[]
     	},
     	{
-    		'users': 'Bruja 3'
+    		'username': 'Bruja 3',
+        "visible": false,
+        "message":[]
     	}
-    ]
-
-    vm.chatActivate = [];
-
+    ];
 
     vm.username = 'Emil';
-
+     
     function headChatBoxClick(){
-		$('.chat_body').slideToggle('slow');
-    };
-
-    function ifExist(name){
-		var exist = false;
-		vm.chatActivate.forEach(function (a){
-			if(name == a.username)
-			{
-				exist = true;
-			}
-		});
-		return exist;
+      $('.chat_body').slideToggle('slow');
     };
 
     function openChats(name){
-		var exist = ifExist(name);
-		if(!exist)
-			vm.chatActivate.push({"username":name, "message":[{"usernameSend":name, "usernameReceive":vm.username, "content":"Habla claro"}]});
+      	vm.usersOnline.forEach(function (a){
+            if(name == a.username)
+              {
+                a.visible = true;
+              }
+        });
     };
 
     function classMessege(sendUsername){
@@ -84,10 +62,16 @@
       $('#msg_wrap_'+index).slideToggle('slow');
     }
 
-    function closeChats(index){
-		vm.chatActivate.splice(index,1);
+    function closeChats(name){
+      vm.usersOnline.forEach(function (a){
+            if(name == a.username)
+              {
+                console.log("hola");
+                a.visible = false;
+              }
+        });
     };
-   	
+    	
 
     function headChat(){
     	$('.msg_wrap').slideToggle('slow');
@@ -98,15 +82,17 @@
     };
 
     function sendMessage(event, name, index){
-		var messages = $("#contentMesaggesId"+index).val();
-		console.log((messages.match(/\n/g)||[]).length);
-		if(event.keyCode == 13 && messages){
-			vm.chatActivate[index].message.push({"usernameSend":vm.username, "usernameReceive":name, "content":messages});
-			console.log($("#contentMesaggesId"+index).value);
-			$("#contentMesaggesId"+index).val(null);
+      var messages = $("#contentMesaggesId"+index).val();
+      if(event.keyCode == 13 && messages){
+      	vm.usersOnline[index].message.push({"usernameSend":vm.username, "usernameReceive":name, "content":messages});
+      	console.log($("#contentMesaggesId"+index).value);
+      };
+      if(event.keyCode == 13){
+        setTimeout(function() {
+          $("#contentMesaggesId"+index).val(null);
+        }, 10);
+      }
+    };
 
-
-		};
-	};
-}
+  }
 })();

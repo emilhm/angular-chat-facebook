@@ -16,18 +16,18 @@
 			<div class="chat_head" ng-click="chat.headChatBoxClick()"> Chat Box</div>
 			<div class="chat_body" > 
 			<div ng-repeat="chatUsers in chat.usersOnline">
-				<div class="user" ng-click="chat.openChats(chatUsers.users)"> 
-					{{ chatUsers.users }}
+				<div class="user" ng-click="chat.openChats(chatUsers.username)"> 
+					{{ chatUsers.username }}
 				</div>
 			</div>
 			</div>
 		</div>
-		<div ng-repeat="messeges in chat.chatActivate">
+		<div ng-repeat="messeges in chat.usersOnline | filter:{visible:true}">
 			<div class="msg_box" style="{{'right:'+(($index+1) * 255)+'px'}}">
 				<div ng-click="chat.minChats($index);" class="msg_head">
 					<div  style="width: 100%;">
 					{{ messeges.username }}</div>
-					<div ng-click="chat.closeChats($index);" class="close">x</div>
+					<div ng-click="chat.closeChats(messeges.username);" class="close">x</div>
 				</div>
 				<div class="msg_wrap" id="{{'msg_wrap_' + $index}}">
 					<div class="msg_body">
@@ -38,8 +38,6 @@
 			</div>
 		</div>
 	</div>
-
-
 	<script src="../bower_components/lodash/dist/lodash.js"></script>
 	<script src="../bower_components/jquery/dist/jquery.js"></script>
 	<script src="../bower_components/angular/angular.js"></script>
