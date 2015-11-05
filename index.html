@@ -22,16 +22,18 @@
 			</div>
 			</div>
 		</div>
-		<div ng-repeat="chats in chat.chatActivate">
+		<div ng-repeat="messeges in chat.chatActivate">
 			<div class="msg_box" style="{{'right:'+(($index+1) * 255)+'px'}}">
-				<div class="msg_head">{{ chats.username }}
+				<div ng-click="chat.minChats($index);" class="msg_head">
+					<div  style="width: 100%;">
+					{{ messeges.username }}</div>
 					<div ng-click="chat.closeChats($index);" class="close">x</div>
 				</div>
-				<div class="msg_wrap">
+				<div class="msg_wrap" id="{{'msg_wrap_' + $index}}">
 					<div class="msg_body">
-						<div class="msg_a" ng-repeat="messeges in chats.message">{{ messeges.content}}</div>
+						<div ng-class="chat.classMessege(messeges.usernameSend);" ng-repeat="messeges in messeges.message">{{ messeges.content}}</div>
 					</div>
-					<div class="msg_footer"><textarea type="text" class="msg_input" rows="4" id="{{'contentMesaggesId'+ $index}}" ng-keypress="chat.sendMessage($event, chats.username, $index);"></textarea></div>
+					<div class="msg_footer"><textarea type="text" class="msg_input" rows="4" id="{{'contentMesaggesId'+ $index}}" ng-keypress="chat.sendMessage($event, messeges.username, $index);"></textarea></div>
 				</div>
 			</div>
 		</div>

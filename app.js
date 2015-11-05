@@ -12,6 +12,8 @@
     vm.headChatBoxClick = headChatBoxClick;
     vm.openChats = openChats;
     vm.closeChats = closeChats;
+    vm.classMessege = classMessege;
+    vm.minChats = minChats;
 
     vm.messages = [
       {
@@ -67,8 +69,20 @@
     function openChats(name){
 		var exist = ifExist(name);
 		if(!exist)
-			vm.chatActivate.push({"username":name, "message":[]});
+			vm.chatActivate.push({"username":name, "message":[{"usernameSend":name, "usernameReceive":vm.username, "content":"Habla claro"}]});
     };
+
+    function classMessege(sendUsername){
+      if(sendUsername == vm.username)
+        return "msg_send";
+      else
+        return "msg_receive"
+
+    }
+
+    function minChats(index){
+      $('#msg_wrap_'+index).slideToggle('slow');
+    }
 
     function closeChats(index){
 		vm.chatActivate.splice(index,1);
@@ -96,21 +110,3 @@
 	};
 }
 })();
-
-
-$(document).ready(function(){
-
-	$('.msg_head').click(function(){
-		$('.msg_wrap').slideToggle('slow');
-	});
-	
-	$('.close').click(function(){
-		$('.msg_box').hide();
-	});
-	
-	$('.user').click(function(){
-
-		$('.msg_wrap').show();
-		$('.msg_box').show();
-	});	
-});

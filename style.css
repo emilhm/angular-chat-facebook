@@ -37,6 +37,7 @@ body{
 
 .msg_head{
 	background:#3498db;
+	display: flex;
 }
 
 .msg_body{
@@ -58,7 +59,7 @@ body{
 }
 
 .close{
-	float:right;
+	text-align:right;
 	cursor:pointer;
 }
 .minimize{
@@ -88,8 +89,9 @@ body{
 	border-radius:6px;
 }
 
-.msg_a{
+.msg_receive{
 	position:relative;
+	word-wrap: break-word;
 	background:#FDE4CE;
 	padding:10px;
 	min-height:10px;
@@ -97,7 +99,7 @@ body{
 	margin-right:10px;
 	border-radius:5px;
 }
-.msg_a:before{
+.msg_receive:before{
 	content:"";
 	position:absolute;
 	width:0px;
@@ -109,8 +111,9 @@ body{
 }
 
 
-.msg_b{
+.msg_send{
 	background:#EEF2E7;
+	word-wrap: break-word;
 	padding:10px;
 	min-height:15px;
 	margin-bottom:5px;
@@ -118,7 +121,7 @@ body{
 	margin-left:10px;
 	border-radius:5px;
 }
-.msg_b:after{
+.msg_send:after{
 	content:"";
 	position:absolute;
 	width:0px;
