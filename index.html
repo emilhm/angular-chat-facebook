@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="facivon.ico">
+    <title>Facebook like chat</title>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+	<div ng-controller="ChatController as chat">
+		<div class="chat_box" >
+			<div class="chat_head" ng-click="chat.headChatBoxClick()"> Chat Box</div>
+			<div class="chat_body" > 
+			<div ng-repeat="chatUsers in chat.usersOnline">
+				<div class="user" ng-click="chat.openChats(chatUsers.users)"> 
+					{{ chatUsers.users }}
+				</div>
+			</div>
+			</div>
+		</div>
+		<div ng-repeat="chats in chat.chatActivate">
+			<div class="msg_box" style="{{'right:'+(($index+1) * 255)+'px'}}">
+				<div class="msg_head">{{ chats.username }}
+					<div ng-click="chat.closeChats($index);" class="close">x</div>
+				</div>
+				<div class="msg_wrap">
+					<div class="msg_body">
+						<div class="msg_a" ng-repeat="messeges in chats.message">{{ messeges.content}}</div>
+					</div>
+					<div class="msg_footer"><textarea type="text" class="msg_input" rows="4" id="{{'contentMesaggesId'+ $index}}" ng-keypress="chat.sendMessage($event, chats.username, $index);"></textarea></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="bower_components/lodash/dist/lodash.js"></script>
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="src/scripts/index.js"></script>
+	<script src="app.js"></script>
+
+</body>
+</html>
