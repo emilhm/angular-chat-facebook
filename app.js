@@ -17,6 +17,9 @@
     vm.classMessege = classMessege;
     vm.minChats = minChats;
 
+
+    /////////////////////////////////////////////////////////////////////////////////
+
     vm.usersOnline=[
     	{
     		'username': 'Bruja 1', 
@@ -55,7 +58,6 @@
         return "msg_send";
       else
         return "msg_receive"
-
     }
 
     function minChats(index){
@@ -64,17 +66,11 @@
 
     function closeChats(name){
       vm.usersOnline.forEach(function (a){
-            if(name == a.username)
-              {
-                console.log("hola");
-                a.visible = false;
-              }
+          if(name == a.username)
+            {
+              a.visible = false;
+            }
         });
-    };
-    	
-
-    function headChat(){
-    	$('.msg_wrap').slideToggle('slow');
     };
 
     function showHideCharMsg(){
@@ -84,9 +80,13 @@
     function sendMessage(event, name, index){
       var messages = $("#contentMesaggesId"+index).val();
       if(event.keyCode == 13 && messages){
-      	vm.usersOnline[index].message.push({"usernameSend":vm.username, "usernameReceive":name, "content":messages});
-      	console.log($("#contentMesaggesId"+index).value);
-      };
+        vm.usersOnline.forEach(function (a){
+          if(name == a.username)
+            {
+      	       a.message.push({"usernameSend":vm.username, "usernameReceive":name, "content":messages});
+            }
+        });
+      }
       if(event.keyCode == 13){
         setTimeout(function() {
           $("#contentMesaggesId"+index).val(null);
